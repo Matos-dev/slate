@@ -36,6 +36,7 @@ end
 
 # Github pages require relative links
 activate :relative_assets
+activate :i18n, :path => "/locales/:locale/", :mount_at_root => :es
 set :relative_links, true
 
 # Build Configuration

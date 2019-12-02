@@ -4,14 +4,13 @@ title: API Reference
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
   - ruby
-  - javascript
 
 toc_footers:
   - <a href='https://app.oxalis.cl/users/sign_in'>Sign Up for a Developer Key</a>
   - <div>&#169; 2018 Corporate Legal Solutions</div>
 
 includes:
-  - errors
+  - errors.en
 
 search: true
 ---
@@ -20,7 +19,7 @@ search: true
 
 Welcome to the Oxalis2 API! You can use our API to access Oxalis2 API endpoints, which can get information of client's requests in our database.
 
-We have language bindings Shell, Ruby, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have language bindings Shell, Ruby! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 # Version
 Version: 1.0.0
@@ -95,10 +94,6 @@ password|string|company_password|Password to use API resources
  
 ```
 
-```javascript
-  // not implemented
-```
-
 > Response for get all requests
 
 ```json
@@ -144,10 +139,6 @@ password|string|company_password|Password to use API resources
                                                      password: 'company_password'})
    result = JSON.parse(response) 
    result
-```
-
-```javascript
-  // not implemented
 ```
 
 > Response for get request
@@ -202,10 +193,6 @@ password|string|company_password|Password to use API resources
   result
 ```
 
-```javascript
-  // not implemented
-```
-
 > Response for create request
 
 ```json
@@ -241,10 +228,6 @@ password|string|company_password|Password to use API resources
                                                     password: 'company_password'})
   result = JSON.parse(response) 
   result
-```
-
-```javascript
-  // not implemented
 ```
 
 > Response for get request status
@@ -294,10 +277,6 @@ password|string|company_password|Password to use API resources
   result
 ```
 
-```javascript
-  // not implemented
-```
-
 > Response for complement request
 
 ```json
@@ -331,10 +310,6 @@ password|string|company_password|Password to use API resources
                                          headers: { username: 'company_username',
                                                     password: 'company_password'})
 
-```
-
-```javascript
-  // not implemented
 ```
 
 > Response for get request report
