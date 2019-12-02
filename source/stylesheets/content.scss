@@ -1,3 +1,10 @@
+@charset "utf-8";
+
+@import 'normalize';
+@import 'variables2';
+@import 'icon-font';
+@import 'original';
+//@import 'rtl';
 ////////////////////////////////////////////////////////////////////////////////
 // CONTENT STYLES
 ////////////////////////////////////////////////////////////////////////////////
@@ -17,7 +24,7 @@
   }
 
   &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
-    padding: 0 $main-padding;
+    //padding: 0 $main-padding;
     box-sizing: border-box;
     display: block;
 

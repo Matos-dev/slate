@@ -4,12 +4,11 @@ title: API Reference
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
   - ruby
-  - python
   - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - <a href='https://app.oxalis.cl/users/sign_in'>Sign Up for a Developer Key</a>
+  - <div>&#169; 2018 Corporate Legal Solutions</div>
 
 includes:
   - errors
@@ -19,221 +18,327 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Oxalis2 API! You can use our API to access Oxalis2 API endpoints, which can get information of client's requests in our database.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have language bindings Shell, Ruby, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+# Version
+Version: 1.0.0
+
+URL: [Oxalis2 API](https://app.oxalis.cl/api/v1/)
+
+# Request credentials
+
+The credentials must be requested to Corporate Legal Solutions
 
 # Authentication
 
-> To authorize, use this code:
+Oxalis2 uses API username and API password to allow access to the API. You can get these at our [Oxalis](http://oxalis.cl).
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+Oxalis expects for the API username and API password to be included in all API requests to the server in a header that looks like the following:
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+  You must replace <code>username</code> and <code>password</code>  with your personal API info.
 </aside>
 
-# Kittens
+# Authenticate
+<p class="explanation">
+  Add auth parameters in <strong>Header</strong>
+</p>
 
-## Get All Kittens
+`Header: username` `Header: password`
 
-```ruby
-require 'kittn'
+<p><strong>URL Parameters</strong></p>
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
+Parameter | Type | Example | Description
+--------- | ---- | ------- | -----------
+username|string|company_username|Identifier to use API resources
+password|string|company_password|Password to use API resources
 
-```python
-import kittn
+> Make sure to replace `username` and `password` with your API username and API password respectively.
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+ <aside class="success">
+   Remember — a happy user is an authenticated user!
+</aside>
+
+# Client's request management
+  <p class="explanation">
+  This session allows you to manage client's requests
+  <span>To better understand, review the examples in different languages</span>
+  </p> 
+
+### GET ALL REQUESTS
+ <p><span class="label label-info">GET</span>/requests</p>
+  <p><strong>URL Parameters</strong></p>
+  
+  Parameter | Type | Example | Description
+  --------- | ---- | ------- | -----------
+  
+> Example for get all requests
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+  curl -X GET "https://app.oxalis.cl/api/v1/requests" \
+    -H "username: company_username" \
+    -H "password: company_password"
+```
+
+```ruby
+  require 'rest-client'
+  require 'json'
+  
+ response = RestClient::Request.execute(method: :get,
+                                        url: 'http://app.oxalis.cl/api/v1/requests',
+                                        headers: { username: 'company_username',
+                                                   password: 'company_password'})
+ result = JSON.parse(response) 
+ result
+ 
 ```
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+  // not implemented
 ```
 
-> The above command returns JSON structured like this:
+> Response for get all requests
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+[{
+   "id": 1,
+   "entity_name": "Test 1",
+   "legal_number": "77.777.777-7",
+   "missing_records": "Falta antecedente numero 1",
+   "lawyer": "Example Lawyer"
+},
+   {
+     "id": 2,
+     "entity_name": "Test 2",
+     "legal_number": "88.888.888-8",
+     "missing_records": null,
+     "lawyer_id": null
+   }]
 ```
 
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+### GET REQUEST
+  <p><span class="label label-info">GET</span>/requests/<code>{request_id}</code></p>
+  <p><strong>URL Parameters</strong></p>
+  
+  Parameter | Type | Example | Description
+  --------- | ---- | ------- | -----------
+  request_id|integer|1|ID of specific client' request
+  
+> Example for get request
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
+  curl -X GET "https://app.oxalis.cl/api/v1/requests/1" \
+    -H "username: company_username" \
+    -H "password: company_password"
+```
+
+```ruby
+    require 'rest-client'
+    require 'json'
+    
+   response = RestClient::Request.execute(method: :get,
+                                          url: 'http://app.oxalis.cl/api/v1/requests/1',
+                                          headers: { username: 'company_username',
+                                                     password: 'company_password'})
+   result = JSON.parse(response) 
+   result
 ```
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+  // not implemented
 ```
 
-> The above command returns JSON structured like this:
+> Response for get request
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "id": 1,
+  "entity_name": "Test 1",
+  "legal_number": "77.777.777-7",
+  "missing_records": "test en producción",
+  "lawyer": "Example Lawyer"
 }
 ```
 
-This endpoint retrieves a specific kitten.
+### CREATE REQUEST
+  <p><span class="label label-info">POST</span>/requests</p>
+  <p><strong>URL Parameters</strong></p>
+  
+  Parameter | Type | Example | Description
+  --------- | ---- | ------- | -----------
+  request_id|integer|1|ID to create client' request
+  
+  <p><strong>Form Data</strong></p>
+  
+  Parameter | Type | Example
+  --------- | ---- | -------
+  rut|string|77.777.777-7
+  name|string|Example Society
+  documents|array[string]|["http://example.com/document1.pdf", "http://example.com/document2.pdf"]
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+  <aside class="notice">
+   The files that are sent in the <code>documents</code> attribute must be in <strong>PDF</strong> format.
+  </aside>
+  
+> Example for create request
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
+  curl -X POST "https://app.oxalis.cl/api/v1/requests" \
+    -H "username: company_username" \
+    -H "password: company_password"
+```
+
+```ruby
+  require 'rest-client'
+  require 'json'
+   
+  response = RestClient::Request.execute(method: :post,
+                                         url: 'http://app.oxalis.cl/api/v1/requests',
+                                         headers: { username: 'company_username',
+                                                    password: 'company_password'})
+  result = JSON.parse(response) 
+  result
 ```
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+  // not implemented
 ```
 
-> The above command returns JSON structured like this:
+> Response for create request
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+  "request_id": 1,
+  "message": "Request created successfully"
 }
 ```
 
-This endpoint deletes a specific kitten.
+### GET REQUEST STATUS
+  <p><span class="label label-info">GET</span>/requests/<code>{request_id}</code>/status</p>
+  <p><strong>URL Parameters</strong></p>
+  
+  Parameter | Type | Example | Description
+  --------- | ---- | ------- | -----------
+  request_id|integer|1|ID of specific client' request
+  
+> Example for get request status
 
-### HTTP Request
+```shell
+  curl -X GET "https://app.oxalis.cl/api/v1/requests/1/status" \
+    -H "username: company_username" \
+    -H "password: company_password"
+```
 
-`DELETE http://example.com/kittens/<ID>`
+```ruby
+  require 'rest-client'
+  require 'json'
+   
+  response = RestClient::Request.execute(method: :get,
+                                         url: 'https://app.oxalis.cl/api/v1/requests/1/status',
+                                         headers: { username: 'company_username',
+                                                    password: 'company_password'})
+  result = JSON.parse(response) 
+  result
+```
 
-### URL Parameters
+```javascript
+  // not implemented
+```
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+> Response for get request status
 
+```json
+{
+  "request_id": 1,
+  "status": "requested"
+}
+```
+
+### COMPLEMENT REQUEST
+  <p><span class="label label-info">POST</span>/requests/<code>{request_id}</code>/complement</p>
+  <p><strong>URL Parameters</strong></p>
+  
+  Parameter | Type | Example | Description
+  --------- | ---- | ------- | -----------
+  request_id|integer|1|ID to create client' request
+  
+  <p><strong>Form Data</strong></p>
+  
+  Parameter | Type | Example
+  --------- | ---- | -------
+  documents|array[string]|["http://example.com/document1.pdf", "http://example.com/document2.pdf"]
+
+  <aside class="notice">
+   The files that are sent in the <code>documents</code> attribute must be in <strong>PDF</strong> format.
+  </aside>
+  
+> Example for complement request
+
+```shell
+  curl -X POST "https://app.oxalis.cl/api/v1/requests/1/complement" \
+    -H "username: company_username" \
+    -H "password: company_password"
+```
+
+```ruby
+  require 'rest-client'
+  require 'json'
+   
+  response = RestClient::Request.execute(method: :post,
+                                         url: 'https://app.oxalis.cl/api/v1/requests/1/complement',
+                                         headers: { username: 'company_username',
+                                                    password: 'company_password'})
+  result = JSON.parse(response) 
+  result
+```
+
+```javascript
+  // not implemented
+```
+
+> Response for complement request
+
+```json
+{
+  "request_id": 1,
+  "message": "Request complemented successfully"
+}
+```
+
+### GET REQUEST REPORT
+  <p><span class="label label-info">GET</span>/requests/<code>{request_id}</code>/report</p>
+  <p><strong>URL Parameters</strong></p>
+  
+  Parameter | Type | Example | Description
+  --------- | ---- | ------- | -----------
+  
+> Example for get request report
+
+```shell
+  curl -X GET "https://app.oxalis.cl/api/v1/requests/1/report" \
+    -H "username: company_username" \
+    -H "password: company_password"
+```
+
+```ruby
+  require 'rest-client'
+  require 'json'
+   
+  response = RestClient::Request.execute(method: :get,
+                                         url: 'https://app.oxalis.cl/api/v1/requests/1/report',
+                                         headers: { username: 'company_username',
+                                                    password: 'company_password'})
+
+```
+
+```javascript
+  // not implemented
+```
+
+> Response for get request report
+
+```text
+  Download document
+```
