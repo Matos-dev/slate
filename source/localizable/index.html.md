@@ -317,3 +317,126 @@ password|string|company_password|Contraseña para usar los recursos de la API
 ```text
   Descargar documento
 ```
+
+### FACULTADES DE UN APODERADO
+  <p><span class="label label-info">GET</span>/requests/<code>{request_id}</code>/faculty_group/<code>{faculty_group_id}</code>/person/<code>{person_id}</code></p>
+  <p><strong>URL Parámetros</strong></p>
+  
+  Parámetro | Tipo | Ejemplo | Descripción
+  --------- | ---- | ------- | -----------
+  request_id|integer|1|ID de la solicitud específica del cliente
+  faculty_group_id|integer|1|ID del grupo de facultades
+  person_id|integer|1|ID del apoderado
+  
+> Ejemplo para obtener las facultades de un apoderado
+
+```shell
+  curl -X GET "https://app.oxalis.cl/api/v1/requests/1/faculty_group/1/person/1" \
+    -H "username: company_username" \
+    -H "password: company_password"
+```
+
+```ruby
+  require 'rest-client'
+  require 'json'
+   
+  response = RestClient::Request.execute(method: :get,
+                                         url: 'https://app.oxalis.cl/api/v1/requests/1/faculty_group/1/person/1',
+                                         headers: { username: 'company_username',
+                                                    password: 'company_password'})
+  result = JSON.parse(response) 
+  result
+```
+
+> Respuesta al obtener las facultades de un apoderado
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Facultad para desarrollar la actividad 1"
+  },
+  {
+    "id": 2,
+    "name": "Facultad para desarrollar la actividad 2"
+  },
+  {
+    "id": 3,
+    "name": "Facultad para desarrollar la actividad 3"
+  }
+]
+```
+
+
+### APODERADOS POR FACULTADES
+  <p><span class="label label-info">GET</span>/requests/<code>{request_id}</code>/faculty_group/<code>{faculty_group_id}</code></p>
+  <p><strong>URL Parámetros</strong></p>
+  
+  Parámetro | Tipo | Ejemplo | Descripción
+  --------- | ---- | ------- | -----------
+  request_id|integer|1|ID de la solicitud específica del cliente
+  faculty_group_id|integer|1|ID del grupo de facultades
+  
+> Ejemplo para obtener los apoderados por facultades
+
+```shell
+  curl -X GET "https://app.oxalis.cl/api/v1/requests/1/faculty_group/1" \
+    -H "username: company_username" \
+    -H "password: company_password"
+```
+
+```ruby
+  require 'rest-client'
+  require 'json'
+   
+  response = RestClient::Request.execute(method: :get,
+                                         url: 'https://app.oxalis.cl/api/v1/requests/1/faculty_group/1',
+                                         headers: { username: 'company_username',
+                                                    password: 'company_password'})
+  result = JSON.parse(response) 
+  result
+```
+
+> Respuesta al obtener los apoderados por facultades
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Facultad para desarrollar la actividad 1",
+    "people": [
+                {
+                  "id": 1,
+                  "name": "Apoderado1 Apellido1"
+                },
+                {
+                  "id": 2,
+                  "name": "Apoderado2 Apellido2"
+                }
+             ]
+  },
+  {
+    "id": 2,
+    "name": "Facultad para desarrollar la actividad 2",
+    "people": [
+                {
+                  "id": 1,
+                  "name": "Apoderado1 Apellido1"
+                },
+                {
+                  "id": 2,
+                  "name": "Apoderado2 Apellido2"
+                },
+                {
+                  "id": 3,
+                  "name": "Apoderado3 Apellido3"
+                }
+             ]
+  },
+  {
+    "id": 3,
+    "name": "Facultad para desarrollar la actividad 3",
+    "people": [ ]
+  }
+]
+```

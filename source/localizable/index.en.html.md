@@ -317,3 +317,126 @@ password|string|company_password|Password to use API resources
 ```text
   Download document
 ```
+
+
+### PERSON'S FACULTIES
+  <p><span class="label label-info">GET</span>/requests/<code>{request_id}</code>/faculty_group/<code>{faculty_group_id}</code>/person/<code>{person_id}</code></p>
+  <p><strong>URL Parameters</strong></p>
+  
+  Parameter | Type | Example | Description
+  --------- | ---- | ------- | -----------
+  request_id|integer|1|ID of specific client' request
+  faculty_group_id|integer|1|ID of faculties group
+  person_id|integer|1|ID of person
+  
+> Example for get person's faculties
+
+```shell
+  curl -X GET "https://app.oxalis.cl/api/v1/requests/1/faculty_group/1/person/1" \
+    -H "username: company_username" \
+    -H "password: company_password"
+```
+
+```ruby
+  require 'rest-client'
+  require 'json'
+   
+  response = RestClient::Request.execute(method: :get,
+                                         url: 'https://app.oxalis.cl/api/v1/requests/1/faculty_group/1/person/1',
+                                         headers: { username: 'company_username',
+                                                    password: 'company_password'})
+  result = JSON.parse(response) 
+  result
+```
+
+> Response for get person's faculties
+
+```json
+[
+  {
+    "id": 1,
+    "name": "faculty to develop activity 1"
+  },
+  {
+    "id": 2,
+    "name": "faculty to develop activity 2"
+  },
+  {
+    "id": 3,
+    "name": "faculty to develop activity 3"
+  }
+]
+```
+
+
+### PERSONS BY FACULTIES
+  <p><span class="label label-info">GET</span>/requests/<code>{request_id}</code>/faculty_group/<code>{faculty_group_id}</code></p>
+  <p><strong>URL Parameters</strong></p>
+  
+  Parameter | Type | Example | Description
+  --------- | ---- | ------- | -----------
+  request_id|integer|1|ID of specific client' request
+  faculty_group_id|integer|1|ID of faculties group
+  
+> Example for get persons by faculties
+
+```shell
+  curl -X GET "https://app.oxalis.cl/api/v1/requests/1/faculty_group/1" \
+    -H "username: company_username" \
+    -H "password: company_password"
+```
+
+```ruby
+  require 'rest-client'
+  require 'json'
+   
+  response = RestClient::Request.execute(method: :get,
+                                         url: 'https://app.oxalis.cl/api/v1/requests/1/faculty_group/1',
+                                         headers: { username: 'company_username',
+                                                    password: 'company_password'})
+  result = JSON.parse(response) 
+  result
+```
+
+> Response for get persons by faculties
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Facultad para desarrollar la actividad 1",
+    "people": [
+                {
+                  "id": 1,
+                  "name": "Apoderado1 Apellido1"
+                },
+                {
+                  "id": 2,
+                  "name": "Apoderado2 Apellido2"
+                }
+             ]
+  },
+  {
+    "id": 2,
+    "name": "Facultad para desarrollar la actividad 2",
+    "people": [
+                {
+                  "id": 1,
+                  "name": "Apoderado1 Apellido1"
+                },
+                {
+                  "id": 2,
+                  "name": "Apoderado2 Apellido2"
+                },
+                {
+                  "id": 3,
+                  "name": "Apoderado3 Apellido3"
+                }
+             ]
+  },
+  {
+    "id": 3,
+    "name": "Facultad para desarrollar la actividad 3",
+    "people": [ ]
+  }
+]
